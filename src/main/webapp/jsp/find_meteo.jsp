@@ -3,8 +3,8 @@
     <title>Title</title>
     <body>
         <%@ page import="com.nc.task3.jsp_controller.Controller" %>
-        <%@ page import="com.nc.task3.jsp_controller.impl.yahoo.FindMeteoControllerYahoo" %>
         <%@ page import="com.nc.task3.jsp_controller.Result" %>
+        <%@ page import="com.nc.task3.spring.SpringUtils" %>
         <%
             String city = request.getParameter("city");
 
@@ -12,7 +12,7 @@
             if ((city == null) || city.isEmpty()) {
                 message = "Enter city title!";
             } else {
-                Controller controller = new FindMeteoControllerYahoo(); //TODO get from context
+                Controller controller = (Controller) SpringUtils.getBean("FindMeteoController");
                 Result result = controller.handle(city);
                 if (result.getResult()) {
                     message = "Weather successfully saved";
