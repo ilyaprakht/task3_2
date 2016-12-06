@@ -4,7 +4,45 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="WeatherService" class="com.nc.task3.ws_client.impl.yahoo.YahooWeatherService"/>
-    <bean id="FindMeteoController" class="com.nc.task3.jsp_controller.impl.FindMeteoController"/>
+    <bean id="weatherClient" class="com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient"/>
+
+    <bean id="weatherService" class="com.nc.task3.ws_client.WeatherService">
+        <property name="weatherClient" ref="weatherClient"/>
+    </bean>
+
+    <bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ConnectionFactory"/>
+        <property name="resourceRef" value="true"/>
+    </bean>
+
+    <bean id="jmsQueue" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="jms/queue/WeatherQueue"/>
+        <property name="resourceRef" value="true"/>
+    </bean>
+
+    <bean id="weatherJMSTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="defaultDestination" ref="jmsQueue"/>
+        <property name="sessionTransacted" value="true" />
+        <property name="pubSubDomain" value="false" />
+        <property name="receiveTimeout"	value="10000" />
+    </bean>
+
+    <bean id="jmsSender" class="com.nc.task3.jms.impl.WildFlyJMSSender">
+        <property name="jmsTemplate" ref="weatherJMSTemplate"/>
+    </bean>
+
+    <bean id="jmsService" class="com.nc.task3.jms.JMSService">
+        <property name="jmsSender" ref="jmsSender"/>
+    </bean>
+
+    <bean id="findMeteoController" class="com.nc.task3.jsp_controller.impl.FindMeteoController">
+        <property name="weatherService" ref="weatherService"/>
+        <property name="jmsService" ref="jmsService"/>
+    </bean>
+
+    <bean id="controllerService" class="com.nc.task3.jsp_controller.ControllerService">
+        <property name="findMeteoController" ref="findMeteoController"/>
+    </bean>
 
 </beans>

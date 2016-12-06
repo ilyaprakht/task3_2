@@ -1,4 +1,4 @@
-package com.nc.task3.spring;
+package com.nc.task3.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
