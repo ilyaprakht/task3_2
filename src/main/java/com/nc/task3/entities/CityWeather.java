@@ -26,4 +26,8 @@ public class CityWeather implements Serializable{
         return text;
     }
 
+    public String toString() {
+        return "Weather in city " + city + ": temp=" + temp + ", text=" + text;
+    }
+
 }

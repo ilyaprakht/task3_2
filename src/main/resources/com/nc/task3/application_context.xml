@@ -32,8 +32,21 @@
         <property name="jmsTemplate" ref="weatherJMSTemplate"/>
     </bean>
 
+    <bean id="jmsListener" class="com.nc.task3.jms.impl.WildFlyJMSListener"/>
+
+    <bean id="jmsListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <constructor-arg ref="jmsListener"/>
+    </bean>
+
+    <bean id="jmsListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination" ref="jmsQueue"/>
+        <property name="messageListener" ref="jmsListenerAdapter"/>
+    </bean>
+
     <bean id="jmsService" class="com.nc.task3.jms.JMSService">
         <property name="jmsSender" ref="jmsSender"/>
+        <property name="jmsListener" ref="jmsListener"/>
     </bean>
 
     <bean id="findMeteoController" class="com.nc.task3.jsp_controller.impl.FindMeteoController">
