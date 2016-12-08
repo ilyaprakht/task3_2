@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/jee
-        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
+        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="weatherClient" class="com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient"/>
 
@@ -57,6 +60,7 @@
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination" ref="jmsQueue"/>
         <property name="messageListener" ref="jmsListenerAdapter"/>
+        <property name="sessionTransacted" value="true"/>
     </bean>
 
     <bean id="jmsService" class="com.nc.task3.jms.JMSService">
@@ -72,5 +76,9 @@
     <bean id="controllerService" class="com.nc.task3.jsp_controller.ControllerService">
         <property name="findMeteoController" ref="findMeteoController"/>
     </bean>
+
+    <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager" />
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
