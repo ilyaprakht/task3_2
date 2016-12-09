@@ -68,13 +68,18 @@
         <property name="jmsListener" ref="jmsListener"/>
     </bean>
 
-    <bean id="findMeteoController" class="com.nc.task3.jsp_controller.impl.FindMeteoController">
+    <bean id="findMeteoController" class="com.nc.task3.controller.impl.FindMeteoController">
         <property name="weatherService" ref="weatherService"/>
         <property name="jmsService" ref="jmsService"/>
     </bean>
 
-    <bean id="controllerService" class="com.nc.task3.jsp_controller.ControllerService">
+    <bean id="restWeatherController" class="com.nc.task3.controller.impl.RestWeatherController">
+        <property name="weatherDAOService" ref="weatherDAOService"/>
+    </bean>
+
+    <bean id="controllerService" class="com.nc.task3.controller.ControllerService">
         <property name="findMeteoController" ref="findMeteoController"/>
+        <property name="restWeatherController" ref="restWeatherController"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager" />

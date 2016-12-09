@@ -1,11 +1,18 @@
 package com.nc.task3.entities;
 
+import com.fasterxml.jackson.xml.annotate.JacksonXmlProperty;
+
 import java.io.Serializable;
 
 public class CityWeather implements Serializable{
 
+    @JacksonXmlProperty(localName = "city")
     private String city;
+
+    @JacksonXmlProperty(localName = "temp")
     private String temp;
+
+    @JacksonXmlProperty(localName = "text")
     private String text;
 
     public CityWeather(String city, String temp, String text) {

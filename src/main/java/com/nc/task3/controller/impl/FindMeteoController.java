@@ -1,9 +1,9 @@
-package com.nc.task3.jsp_controller.impl;
+package com.nc.task3.controller.impl;
 
 import com.nc.task3.entities.CityWeather;
 import com.nc.task3.jms.JMSService;
-import com.nc.task3.jsp_controller.Controller;
-import com.nc.task3.jsp_controller.Result;
+import com.nc.task3.controller.Controller;
+import com.nc.task3.controller.Result;
 import com.nc.task3.ws_client.Weather;
 import com.nc.task3.ws_client.WeatherService;
 
@@ -13,7 +13,7 @@ public class FindMeteoController implements Controller {
     private WeatherService weatherService;
     private JMSService jmsService;
 
-    public Result handle(String city) {
+    public Object handle(String city) {
         Weather weather = weatherService.getWeatherClient().findWeather(city);
 
         CityWeather cityWeather = new CityWeather(city, weather.getTemp(), weather.getText());

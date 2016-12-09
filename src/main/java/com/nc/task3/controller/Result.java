@@ -1,4 +1,4 @@
-package com.nc.task3.jsp_controller;
+package com.nc.task3.controller;
 
 
 public class Result {
