@@ -23,10 +23,6 @@ public class RestWeatherController implements Controller {
         return result;
     }
 
-    public WeatherDAOService getWeatherDAOService() {
-        return weatherDAOService;
-    }
-
     public void setWeatherDAOService(WeatherDAOService weatherDAOService) {
         this.weatherDAOService = weatherDAOService;
     }

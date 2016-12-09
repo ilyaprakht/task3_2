@@ -12,7 +12,7 @@
 
     <bean id="weatherClient" class="com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient"/>
 
-    <bean id="weatherService" class="com.nc.task3.ws_client.WeatherService">
+    <bean id="weatherClientService" class="com.nc.task3.ws_client.WeatherClientService">
         <property name="weatherClient" ref="weatherClient"/>
     </bean>
 
@@ -69,7 +69,7 @@
     </bean>
 
     <bean id="findMeteoController" class="com.nc.task3.controller.impl.FindMeteoController">
-        <property name="weatherService" ref="weatherService"/>
+        <property name="weatherClientService" ref="weatherClientService"/>
         <property name="jmsService" ref="jmsService"/>
     </bean>
 

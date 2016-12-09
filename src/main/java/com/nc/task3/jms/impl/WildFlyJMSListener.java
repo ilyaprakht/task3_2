@@ -23,10 +23,6 @@ public class WildFlyJMSListener implements JMSListener {
         }
     }
 
-    public WeatherDAOService getWeatherDAOService() {
-        return weatherDAOService;
-    }
-
     public void setWeatherDAOService(WeatherDAOService weatherDAOService) {
         this.weatherDAOService = weatherDAOService;
     }

@@ -1,7 +1,7 @@
 package com.nc.task3.ws_client;
 
 
-public class WeatherService {
+public class WeatherClientService {
 
     private WeatherClient weatherClient;
 

@@ -7,20 +7,20 @@ import com.nc.task3.jms.JMSService;
 import com.nc.task3.controller.Controller;
 import com.nc.task3.controller.SimpleResult;
 import com.nc.task3.ws_client.Weather;
-import com.nc.task3.ws_client.WeatherService;
+import com.nc.task3.ws_client.WeatherClientService;
 
 
 public class FindMeteoController implements Controller {
 
     private static final String UNKNOWN_ERROR_MESSAGE = "Unknown error";
 
-    private WeatherService weatherService;
+    private WeatherClientService weatherClientService;
     private JMSService jmsService;
 
     public Object handle(String city) {
         SimpleResult result = null;
         try {
-            Weather weather = weatherService.getWeatherClient().findWeather(city);
+            Weather weather = weatherClientService.getWeatherClient().findWeather(city);
             CityWeather cityWeather = new CityWeather(city, weather.getTemp(), weather.getText());
             jmsService.getJmsSender().sendMessage(cityWeather);
             result = new SimpleResult(true);
@@ -34,16 +34,8 @@ public class FindMeteoController implements Controller {
         return result;
     }
 
-    public WeatherService getWeatherService() {
-        return weatherService;
-    }
-
-    public void setWeatherService(WeatherService weatherService) {
-        this.weatherService = weatherService;
-    }
-
-    public JMSService getJmsService() {
-        return jmsService;
+    public void setWeatherClientService(WeatherClientService weatherClientService) {
+        this.weatherClientService = weatherClientService;
     }
 
     public void setJmsService(JMSService jmsService) {

@@ -20,10 +20,6 @@ public class WildFlyJMSSender implements JMSSender {
         }
     }
 
-    public JmsTemplate getJmsTemplate() {
-        return jmsTemplate;
-    }
-
     public void setJmsTemplate(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
     }
