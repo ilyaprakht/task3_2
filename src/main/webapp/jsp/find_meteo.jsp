@@ -3,7 +3,7 @@
     <title>Title</title>
     <body>
         <%@ page import="com.nc.task3.controller.Controller" %>
-        <%@ page import="com.nc.task3.controller.Result" %>
+        <%@ page import="com.nc.task3.controller.SimpleResult" %>
         <%@ page import="com.nc.task3.utils.SpringUtils" %>
         <%@ page import="com.nc.task3.controller.ControllerService" %>
         <%
@@ -14,7 +14,7 @@
                 message = "Enter city title!";
             } else {
                 Controller controller = ((ControllerService) SpringUtils.getBean("controllerService")).getFindMeteoController();
-                Result result = (Result) controller.handle(city);
+                SimpleResult result = (SimpleResult) controller.handle(city);
                 if (result.getResult()) {
                     message = "Weather successfully saved";
                 } else {

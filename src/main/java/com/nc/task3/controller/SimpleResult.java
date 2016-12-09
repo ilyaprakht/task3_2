@@ -1,16 +1,16 @@
 package com.nc.task3.controller;
 
 
-public class Result {
+public class SimpleResult {
 
     private boolean result;
     private String message;
 
-    public Result(boolean result) {
+    public SimpleResult(boolean result) {
         this.result = result;
     }
 
-    public Result(boolean result, String message) {
+    public SimpleResult(boolean result, String message) {
         this(result);
         this.message = message;
     }

@@ -2,6 +2,7 @@ package com.nc.task3.dao.impl;
 
 import com.nc.task3.dao.WeatherDAO;
 import com.nc.task3.entities.CityWeather;
+import com.nc.task3.exception.DAOException;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
         getPreparedStatement(query, params).execute();
     }
 
-    private CityWeather selectWeather(String city) {
+    private CityWeather selectWeather(String city) throws DAOException {
         CityWeather cityWeather = null;
         try {
             ResultSet result = executeSelect(SELECT_WEATHER, city.toLowerCase());
@@ -49,32 +50,35 @@ public class MySQLWeatherDAO implements WeatherDAO {
                 cityWeather = new CityWeather(city, result.getString("temp"), result.getString("text"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO log
+            throw new DAOException(DAOException.SELECT_MESSAGE);
         }
         return cityWeather;
     }
 
-    private boolean existWeather(String city) {
+    private boolean existWeather(String city) throws DAOException {
         return (selectWeather(city) != null);
     }
 
-    private void insertWeather(CityWeather cityWeather) {
+    private void insertWeather(CityWeather cityWeather) throws DAOException {
         try {
             executeDML(INSERT_WEATHER, cityWeather.getCity().toLowerCase(), cityWeather.getTemp(), cityWeather.getText());
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO log
+            throw new DAOException(DAOException.INSERT_MESSAGE);
         }
     }
 
-    private void updateWeather(CityWeather cityWeather) {
+    private void updateWeather(CityWeather cityWeather) throws DAOException {
         try {
             executeDML(UPDATE_WEATHER, cityWeather.getTemp(), cityWeather.getText(), cityWeather.getCity());
         } catch (SQLException e) {
-            e.printStackTrace();
+            // TODO log
+            throw new DAOException(DAOException.UPDATE_MESSAGE);
         }
     }
 
-    public void saveWeather(CityWeather cityWeather) {
+    public void saveWeather(CityWeather cityWeather) throws DAOException {
         if (existWeather(cityWeather.getCity())) {
             updateWeather(cityWeather);
         } else {
@@ -82,7 +86,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
         }
     }
 
-    public CityWeather getWeather(String city) {
+    public CityWeather getWeather(String city) throws DAOException {
         return selectWeather(city);
     }
 }
