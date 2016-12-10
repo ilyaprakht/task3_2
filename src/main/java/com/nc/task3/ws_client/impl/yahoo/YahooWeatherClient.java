@@ -19,12 +19,13 @@ public class YahooWeatherClient implements WeatherClient {
     private static final String YAHOO_URL = "https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"{city}\")&format=xml";
     private final static Logger LOG = Logger.getLogger(YahooWeatherClient.class);
 
+    private RestTemplate restTemplate;
+
     public Weather findWeather(String city) throws WeatherClientException {
         LOG.debug("city=" + city);
         Map<String, String> variablesMap = new HashMap<String, String>();
         variablesMap.put("city", city);
 
-        RestTemplate restTemplate = new RestTemplate();
         String xmlString = null;
         try {
             xmlString = restTemplate.getForObject(YAHOO_URL, String.class, variablesMap);
@@ -47,5 +48,9 @@ public class YahooWeatherClient implements WeatherClient {
         LOG.debug("weather=" + weather);
 
         return weather;
+    }
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 }

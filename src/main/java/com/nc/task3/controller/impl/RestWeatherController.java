@@ -25,6 +25,8 @@ public class RestWeatherController implements Controller {
             result = new WeatherResult(stringResult, cityWeather);
         } catch (DAOException e) {
             result = new WeatherResult(WeatherResult.FAIL_RESULT);
+        } catch (Exception e) {
+            result = new WeatherResult(WeatherResult.FAIL_RESULT);
         }
         LOG.debug("result=" + result);
         return result;

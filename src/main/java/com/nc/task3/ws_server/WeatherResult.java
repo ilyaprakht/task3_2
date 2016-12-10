@@ -25,11 +25,11 @@ public class WeatherResult {
         this.weather = cityWeather;
     }
 
-    public String getSuccessResult() {
+    public String getResult() {
         return result;
     }
 
-    public CityWeather getCityWeather() {
+    public CityWeather getWeather() {
         return weather;
     }
 }

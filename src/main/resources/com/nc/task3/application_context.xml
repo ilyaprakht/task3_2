@@ -10,7 +10,11 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <bean id="weatherClient" class="com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient"/>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
+    <bean id="weatherClient" class="com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient">
+        <property name="restTemplate" ref="restTemplate"/>
+    </bean>
 
     <bean id="weatherClientService" class="com.nc.task3.ws_client.WeatherClientService">
         <property name="weatherClient" ref="weatherClient"/>
