@@ -69,7 +69,6 @@
 
     <bean id="jmsService" class="com.nc.task3.jms.JMSService">
         <property name="jmsSender" ref="jmsSender"/>
-        <property name="jmsListener" ref="jmsListener"/>
     </bean>
 
     <bean id="findMeteoController" class="com.nc.task3.controller.impl.FindMeteoController">

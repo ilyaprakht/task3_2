@@ -3,7 +3,7 @@ package com.nc.task3.dao;
 
 public class WeatherDAOService {
 
-    WeatherDAO weatherDAO;
+    private WeatherDAO weatherDAO;
 
     public WeatherDAO getWeatherDAO() {
         return weatherDAO;

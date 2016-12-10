@@ -4,7 +4,6 @@ import com.nc.task3.controller.Controller;
 import com.nc.task3.dao.WeatherDAOService;
 import com.nc.task3.entities.CityWeather;
 import com.nc.task3.exception.DAOException;
-import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
 import com.nc.task3.ws_server.WeatherResult;
 import org.apache.log4j.Logger;
 
@@ -17,7 +16,7 @@ public class RestWeatherController implements Controller {
 
     public Object handle(String city) {
         LOG.debug("city=" + city);
-        WeatherResult result = null;
+        WeatherResult result;
         try {
             CityWeather cityWeather = weatherDAOService.getWeatherDAO().getWeather(city);
             String stringResult = (cityWeather == null ? WeatherResult.NOT_FOUND_RESULT : WeatherResult.SUCCESS_RESULT);

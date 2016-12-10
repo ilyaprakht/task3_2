@@ -5,7 +5,7 @@ import com.nc.task3.ws_client.Weather;
 import com.nc.task3.ws_client.impl.yahoo.xml.Results;
 
 
-public class YahooWeather implements Weather {
+class YahooWeather implements Weather {
 
     @JacksonXmlProperty(isAttribute = true)
     private String count;

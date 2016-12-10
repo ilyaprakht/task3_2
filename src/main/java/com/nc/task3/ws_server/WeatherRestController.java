@@ -3,7 +3,6 @@ package com.nc.task3.ws_server;
 import com.nc.task3.controller.Controller;
 import com.nc.task3.controller.ControllerService;
 import com.nc.task3.utils.SpringUtils;
-import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 

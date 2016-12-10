@@ -26,7 +26,7 @@ public class YahooWeatherClient implements WeatherClient {
         Map<String, String> variablesMap = new HashMap<String, String>();
         variablesMap.put("city", city);
 
-        String xmlString = null;
+        String xmlString;
         try {
             xmlString = restTemplate.getForObject(YAHOO_URL, String.class, variablesMap);
         } catch (RestClientException e) {
@@ -37,7 +37,7 @@ public class YahooWeatherClient implements WeatherClient {
         LOG.debug("xmlString=" + xmlString);
 
         ObjectMapper xmlMapper = new XmlMapper();
-        YahooWeather weather = null;
+        YahooWeather weather;
         try {
             weather = xmlMapper.readValue(xmlString, YahooWeather.class);
         } catch (IOException e) {

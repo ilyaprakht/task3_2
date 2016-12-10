@@ -3,13 +3,13 @@ package com.nc.task3.dao.impl;
 import com.nc.task3.dao.WeatherDAO;
 import com.nc.task3.entities.CityWeather;
 import com.nc.task3.exception.DAOException;
-import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 
 public class MySQLWeatherDAO implements WeatherDAO {
@@ -27,7 +27,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
     }
 
     private PreparedStatement getPreparedStatement(String query, String[] params) throws SQLException {
-        LOG.debug("query=" + query + ", params=" + params);
+        LOG.debug("query=" + query + ", params=" + Arrays.toString(params));
         PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
         for (int i = 0; i < params.length; i++) {
             statement.setString(i + 1, params[i]);

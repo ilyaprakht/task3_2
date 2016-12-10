@@ -4,7 +4,6 @@ import com.nc.task3.dao.WeatherDAO;
 import com.nc.task3.dao.WeatherDAOService;
 import com.nc.task3.entities.CityWeather;
 import com.nc.task3.exception.DAOException;
-import com.nc.task3.exception.WeatherClientException;
 import com.nc.task3.ws_server.WeatherResult;
 import org.junit.Before;
 import org.junit.Test;

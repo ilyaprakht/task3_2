@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 

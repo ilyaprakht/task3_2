@@ -5,7 +5,6 @@ import com.nc.task3.entities.CityWeather;
 import com.nc.task3.exception.DAOException;
 import com.nc.task3.exception.JMSListenException;
 import com.nc.task3.jms.JMSListener;
-import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
 import org.apache.log4j.Logger;
 
 

@@ -8,7 +8,6 @@ import com.nc.task3.controller.Controller;
 import com.nc.task3.controller.SimpleResult;
 import com.nc.task3.ws_client.Weather;
 import com.nc.task3.ws_client.WeatherClientService;
-import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
 import org.apache.log4j.Logger;
 
 
@@ -22,7 +21,7 @@ public class FindMeteoController implements Controller {
 
     public Object handle(String city) {
         LOG.debug("city=" + city);
-        SimpleResult result = null;
+        SimpleResult result;
         try {
             Weather weather = weatherClientService.getWeatherClient().findWeather(city);
             CityWeather cityWeather = new CityWeather(city, weather.getTemp(), weather.getText());
