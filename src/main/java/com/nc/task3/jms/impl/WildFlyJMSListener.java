@@ -5,9 +5,13 @@ import com.nc.task3.entities.CityWeather;
 import com.nc.task3.exception.DAOException;
 import com.nc.task3.exception.JMSListenException;
 import com.nc.task3.jms.JMSListener;
+import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
+import org.apache.log4j.Logger;
 
 
 public class WildFlyJMSListener implements JMSListener {
+
+    private final static Logger LOG = Logger.getLogger(WildFlyJMSListener.class);
 
     private WeatherDAOService weatherDAOService;
 
@@ -15,10 +19,10 @@ public class WildFlyJMSListener implements JMSListener {
         try {
             weatherDAOService.getWeatherDAO().saveWeather(cityWeather);
         } catch (DAOException e) {
-            // TODO log
+            LOG.error(JMSListenException.DAO_MESSAGE + ": cityWeather=" + cityWeather, e);
             throw new JMSListenException(JMSListenException.DAO_MESSAGE);
         } catch (Exception e) {
-            // TODO log
+            LOG.error(JMSListenException.UNKNOWN_MESSAGE + ": cityWeather=" + cityWeather, e);
             throw new JMSListenException(JMSListenException.UNKNOWN_MESSAGE);
         }
     }

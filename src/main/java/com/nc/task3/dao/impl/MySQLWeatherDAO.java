@@ -3,6 +3,8 @@ package com.nc.task3.dao.impl;
 import com.nc.task3.dao.WeatherDAO;
 import com.nc.task3.entities.CityWeather;
 import com.nc.task3.exception.DAOException;
+import com.nc.task3.ws_client.impl.yahoo.YahooWeatherClient;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -16,6 +18,8 @@ public class MySQLWeatherDAO implements WeatherDAO {
     private static final String INSERT_WEATHER = "insert into weather (city, temp, text) values ( ? , ? , ? )";
     private static final String UPDATE_WEATHER = "update weather set temp = ? , text = ? where city = ? ";
 
+    private final static Logger LOG = Logger.getLogger(MySQLWeatherDAO.class);
+
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
@@ -23,6 +27,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
     }
 
     private PreparedStatement getPreparedStatement(String query, String[] params) throws SQLException {
+        LOG.debug("query=" + query + ", params=" + params);
         PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
         for (int i = 0; i < params.length; i++) {
             statement.setString(i + 1, params[i]);
@@ -39,6 +44,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
     }
 
     private CityWeather selectWeather(String city) throws DAOException {
+        LOG.debug("city=" + city);
         CityWeather cityWeather = null;
         try {
             ResultSet result = executeSelect(SELECT_WEATHER, city.toLowerCase());
@@ -46,7 +52,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
                 cityWeather = new CityWeather(city, result.getString("temp"), result.getString("text"));
             }
         } catch (SQLException e) {
-            // TODO log
+            LOG.error(DAOException.SELECT_MESSAGE + ": city=" + city, e);
             throw new DAOException(DAOException.SELECT_MESSAGE);
         }
         return cityWeather;
@@ -57,24 +63,27 @@ public class MySQLWeatherDAO implements WeatherDAO {
     }
 
     private void insertWeather(CityWeather cityWeather) throws DAOException {
+        LOG.debug("cityWeather=" + cityWeather);
         try {
             executeDML(INSERT_WEATHER, cityWeather.getCity().toLowerCase(), cityWeather.getTemp(), cityWeather.getText());
         } catch (SQLException e) {
-            // TODO log
+            LOG.error(DAOException.INSERT_MESSAGE + ": cityWeather=" + cityWeather, e);
             throw new DAOException(DAOException.INSERT_MESSAGE);
         }
     }
 
     private void updateWeather(CityWeather cityWeather) throws DAOException {
+        LOG.debug("cityWeather=" + cityWeather);
         try {
             executeDML(UPDATE_WEATHER, cityWeather.getTemp(), cityWeather.getText(), cityWeather.getCity());
         } catch (SQLException e) {
-            // TODO log
+            LOG.error(DAOException.UPDATE_MESSAGE + ": cityWeather=" + cityWeather, e);
             throw new DAOException(DAOException.UPDATE_MESSAGE);
         }
     }
 
     public void saveWeather(CityWeather cityWeather) throws DAOException {
+        LOG.debug("cityWeather=" + cityWeather);
         if (existWeather(cityWeather.getCity())) {
             updateWeather(cityWeather);
         } else {
@@ -83,6 +92,7 @@ public class MySQLWeatherDAO implements WeatherDAO {
     }
 
     public CityWeather getWeather(String city) throws DAOException {
+        LOG.debug("city=" + city);
         return selectWeather(city);
     }
 }
