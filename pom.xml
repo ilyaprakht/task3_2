@@ -80,12 +80,6 @@
                     <port>9990</port>
                     <username>admin</username>
                     <password>admin</password>
-                    <!--beforeDeployment>
-                        <commands>
-                            <command>/subsystem=logging/file-handler=TASK3_FILE_LOG:add(level=ALL,autoflush=true,formatter="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n",file={"relative-to"=>"jboss.server.log.dir", "path"=>"task3.log"})</command>
-                            <command>/subsystem=logging/logger=com.nc.task3:add(level=ALL,handlers=[TASK3_FILE_LOG])</command>
-                        </commands>
-                    </beforeDeployment-->
                 </configuration>
                 <executions>
                     <execution>
@@ -150,6 +144,45 @@
                             <goal>add-resource</goal>
                         </goals>
                     </execution>
+                    <!--execution>
+                        <id>add-logger-handler</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <address>subsystem=logging,file-handler=TASK3_FILE_LOG</address>
+                                    <properties>
+                                        <level>ALL</level>
+                                        <autoflush>true</autoflush>
+                                        <pattern-formatter>!!"%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"</pattern-formatter>
+                                        <relative-to>jboss.server.log.dir</relative-to>
+                                        <path>task3.log</path>
+                                    </properties>
+                                </resource>
+                            </resources>
+                        </configuration>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>add-logger</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <address>subsystem=logging,logger=com.nc.task3</address>
+                                    <properties>
+                                        <level>ALL</level>
+                                        <handlers>!!["TASK3_FILE_LOG"]</handlers>
+                                    </properties>
+                                </resource>
+                            </resources>
+                        </configuration>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                    </execution-->
                     <execution>
                         <id>deploy</id>
                         <phase>install</phase>
