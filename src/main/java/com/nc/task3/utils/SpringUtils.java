@@ -1,20 +1,18 @@
 package com.nc.task3.utils;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 
 public class SpringUtils {
 
-    private static final String APPLICATION_CONTEXT_XML = "com/nc/task3/application_context.xml";
-
-    private static ApplicationContext context;
+    private static WebApplicationContext context;
 
     private SpringUtils() {}
 
     public static Object getBean(String beanName) {
         if (context == null) {
-            context = new ClassPathXmlApplicationContext(new String[] {APPLICATION_CONTEXT_XML});
+            context = ContextLoader.getCurrentWebApplicationContext();
         }
         return context.getBean(beanName);
     }

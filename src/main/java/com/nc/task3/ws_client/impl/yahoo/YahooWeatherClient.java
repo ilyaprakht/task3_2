@@ -5,6 +5,8 @@ import com.nc.task3.exception.WeatherClientException;
 import com.nc.task3.ws_client.WeatherClient;
 import com.nc.task3.ws_client.Weather;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -40,6 +42,12 @@ public class YahooWeatherClient implements WeatherClient {
         YahooWeather weather;
         try {
             weather = xmlMapper.readValue(xmlString, YahooWeather.class);
+        } catch (JsonParseException e) {
+            LOG.error(WeatherClientException.INCORRECT_MESSAGE + ": xmlString=" + xmlString, e);
+            throw new WeatherClientException(WeatherClientException.INCORRECT_MESSAGE);
+        } catch (JsonMappingException e) {
+            LOG.error(WeatherClientException.INCORRECT_MESSAGE + ": xmlString=" + xmlString, e);
+            throw new WeatherClientException(WeatherClientException.INCORRECT_MESSAGE);
         } catch (IOException e) {
             LOG.error(WeatherClientException.PARSE_MESSAGE + ": xmlString=" + xmlString, e);
             throw new WeatherClientException(WeatherClientException.PARSE_MESSAGE);
