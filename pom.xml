@@ -133,6 +133,24 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>add-jms-queue</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <address>subsystem=messaging,hornetq-server=default,jms-queue=WeatherQueue</address>
+                                    <properties>
+                                        <durable>true</durable>
+                                        <entries>!!["jms/queue/WeatherQueue", "java:jboss/exported/jms/queue/WeatherQueue"]</entries>
+                                    </properties>
+                                </resource>
+                            </resources>
+                        </configuration>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>deploy</id>
                         <phase>install</phase>
                         <goals>
