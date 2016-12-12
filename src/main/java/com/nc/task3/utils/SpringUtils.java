@@ -10,7 +10,7 @@ public class SpringUtils {
 
     private SpringUtils() {}
 
-    public static Object getBean(String beanName) {
+    public synchronized static Object getBean(String beanName) {
         if (context == null) {
             context = ContextLoader.getCurrentWebApplicationContext();
         }

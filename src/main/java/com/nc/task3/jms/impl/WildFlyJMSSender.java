@@ -16,7 +16,9 @@ public class WildFlyJMSSender implements JMSSender {
 
     public void sendMessage(CityWeather cityWeather) throws JMSSendException {
         try {
-            jmsTemplate.convertAndSend(cityWeather);
+            synchronized (this) {
+                jmsTemplate.convertAndSend(cityWeather);
+            }
         } catch (JmsException e) {
             LOG.error(JMSSendException.SEND_JMS_IN_QUEUE_MESSAGE + ": cityWeather=" + cityWeather, e);
             throw new JMSSendException(JMSSendException.SEND_JMS_IN_QUEUE_MESSAGE);

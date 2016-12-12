@@ -35,11 +35,11 @@ public class MySQLWeatherDAO implements WeatherDAO {
         return statement;
     }
 
-    private ResultSet executeSelect(String query, String... params) throws SQLException {
+    private synchronized ResultSet executeSelect(String query, String... params) throws SQLException {
         return getPreparedStatement(query, params).executeQuery();
     }
 
-    private void executeDML(String query, String... params) throws SQLException {
+    private synchronized void executeDML(String query, String... params) throws SQLException {
         getPreparedStatement(query, params).execute();
     }
 

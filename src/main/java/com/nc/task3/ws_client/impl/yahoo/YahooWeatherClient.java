@@ -30,7 +30,9 @@ public class YahooWeatherClient implements WeatherClient {
 
         String xmlString;
         try {
-            xmlString = restTemplate.getForObject(YAHOO_URL, String.class, variablesMap);
+            synchronized (this) {
+                xmlString = restTemplate.getForObject(YAHOO_URL, String.class, variablesMap);
+            }
         } catch (RestClientException e) {
             LOG.error(WeatherClientException.READ_MESSAGE + ": YAHOO_URL=" + YAHOO_URL + ", variablesMap=" + variablesMap.toString(), e);
             throw new WeatherClientException(WeatherClientException.READ_MESSAGE);
